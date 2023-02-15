@@ -11,6 +11,6 @@ RUN ls
 FROM alpine:3.17
 RUN adduser -D netdisco-exporter
 RUN apk --no-cache add ca-certificates
-COPY --from=builder /build/netdisco-exporter .
+COPY --from=builder /build/netdisco-exporter /bin/netdisco-exporter
 USER netdisco-exporter
 CMD ["/bin/netdisco-exporter"]
