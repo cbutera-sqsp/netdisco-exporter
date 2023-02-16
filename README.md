@@ -2,7 +2,7 @@
 
 ## Prometheus Exporter for metrics from Netdisco
 
-[![N|Solid] https://goreportcard.com/
+[![Go Report Card](https://goreportcard.com/badge/github.com/cbutera-sqsp/netdisco-exporter)](https://goreportcard.com/report/github.com/cbutera-sqsp/netdisco-exporter)
 
 ### Docker
 ```
