@@ -12,7 +12,7 @@ import (
 	"github.com/prometheus/client_golang/prometheus/promauto"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 
-	"github.com/cbutera-sqsp/netdisco-exporter/pkg/exporter"
+	"github.com/cbutera-sqsp/netdisco-exporter/internal/exporter"
 )
 
 const (
