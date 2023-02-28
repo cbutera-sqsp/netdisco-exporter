@@ -6,7 +6,7 @@
 
 ### Docker
 ```
-docker run --restart unless-stopped -d -p 8080:8080 -e NETDISCO_HOST -e NETDISCO_USERNAME -e NETDISCO_PASSWORD cbutera90/netdisco-exporter
+docker run --restart unless-stopped -d -p 8080:8080 -e NETDISCO_HOST -e NETDISCO_USERNAME -e NETDISCO_PASSWORD --name netdisco-exporter cbutera90/netdisco-exporter
 ```
 
 ## Metrics

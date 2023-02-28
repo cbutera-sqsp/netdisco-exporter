@@ -62,6 +62,7 @@ func ApiStatus() {
 		log.Error(err)
 	} else if resp.StatusCode == 200 {
 		NETDISCO_API_STATUS.Set(1)
+		defer resp.Body.Close()
 	}
 }
 
@@ -85,6 +86,7 @@ func Login() string {
 	if err != nil {
 		log.Fatal(err)
 	}
+	defer resp.Body.Close()
 
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
@@ -97,6 +99,34 @@ func Login() string {
 		log.Fatal(err)
 	}
 	return Apikey.Data
+}
+
+// Logout to netdisco API - Destroy user API Key and session cookie
+func Logout(ApiKey string) {
+	path := "/logout"
+	url := netdiscoHost + path
+	req, err := http.NewRequest("GET", url, nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	client := &http.Client{
+		Timeout: time.Second * 10,
+	}
+
+	req.Header.Add("Accept", "application/json")
+	req.Header.Add("Authorization", ApiKey)
+
+	resp, err := client.Do(req)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != 200 {
+		log.Error(resp.StatusCode)
+		log.Error("Logout successful")
+	}
 }
 
 // Struct containing API key
@@ -125,13 +155,10 @@ type Device []struct {
 	SinceLastDiscover float64     `json:"since_last_discover"`
 }
 
-// Gather device data
-func SearchDevice() {
-	ApiKey := Login()
-
+// Gather device polling data
+func PollingMetrics(ApiKey string) {
 	path := "/api/v1/search/device?layers=3"
 	url := netdiscoHost + path
-
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		log.Error(err)
@@ -147,6 +174,7 @@ func SearchDevice() {
 	if err != nil {
 		log.Error(err)
 	}
+	defer resp.Body.Close()
 
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {

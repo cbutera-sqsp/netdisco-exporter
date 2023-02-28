@@ -58,7 +58,8 @@ func main() {
 	t := time.NewTicker(_pollDuration)
 	for range t.C {
 		exporter.ApiStatus()
-		exporter.SearchDevice()
+		ApiKey := exporter.Login()
+		exporter.PollingMetrics(ApiKey)
+		exporter.Logout(ApiKey)
 	}
-
 }
