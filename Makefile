@@ -32,6 +32,10 @@ tidy:
 container: 
 	docker build -t cbutera90/netdisco-exporter .
 
+.PHONY: publish-container
+publish-container: 
+	docker push cbutera90/netdisco-exporter
+
 .PHONY: run
 run:
 	docker run -p 8080:8080 -e NETDISCO_HOST -e NETDISCO_USERNAME -e NETDISCO_PASSWORD -it cbutera90/netdisco-exporter
